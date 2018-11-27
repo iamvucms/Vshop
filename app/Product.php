@@ -13,7 +13,7 @@ class Product extends Model
     }
     public function reviews()
     {
-        return $this->belongsTo('App\Review', 'product_id', 'pro duct_id');
+        return $this->belongsTo('App\Review', 'product_id', 'product_id');
     }
     //not necessary
     public function orderdetails()
