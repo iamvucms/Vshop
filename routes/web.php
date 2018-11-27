@@ -11,4 +11,6 @@
 |
 */
 
-Route::get('/', ['as'=>'home','uses'=>'IndexController@renderIndex']);
+Route::get('/', ['as'=>'home','uses'=>'IndexController@renderIndex']); 
+// Route::get('connect', function () {
+// });
