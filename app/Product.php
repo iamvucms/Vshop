@@ -13,11 +13,16 @@ class Product extends Model
     }
     public function reviews()
     {
-        return $this->belongsTo('App\Review', 'product_id', 'product_id');
+        return $this->belongsTo('App\Review', 'product_id', 'pro duct_id');
     }
+    //not necessary
     public function orderdetails()
     {
         return $this->hasMany('App\Orderdetail', 'product_id', 'product_id');
+    }
+    public function images()
+    {
+        return $this->hasMany('App\Image', 'product_id', 'product_id');
     }
     
 }
