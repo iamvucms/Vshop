@@ -6,7 +6,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function productDetails(){
-        return Product::where('product_id',1)->first()->product_name;
+    public function productDetails($slug,$id){
+        $product= Product::where('product_id',$id)->where('slug',$slug)->first();
+    
+        if(!$product) abort(404);
+        else{
+            $title = $product->product_name;
+            return view("layout.product",compact("title","product"));
+        }
     }
 }

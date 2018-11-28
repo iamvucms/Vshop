@@ -24,5 +24,12 @@ class Product extends Model
     {
         return $this->hasMany('App\Image', 'product_id', 'product_id');
     }
+    public function discount()
+    {
+        return $this->hasOne('App\Discount', 'product_id', 'product_id');
+    //     ->SelectRaw(
+    //         'UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(discounts.created_at)','<','expired_time'
+    //    )
+    }
     
 }
