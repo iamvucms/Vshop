@@ -21,3 +21,4 @@ Route::get('test', function () {
     $row = App\Product::where('product_id',1)->first()->category;
         dd($row);
 });
+Route::get('product/{slug}-{id}.html','ProductController@productDetails');
