@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -26,10 +26,9 @@ class Product extends Model
     }
     public function discount()
     {
-        return $this->hasOne('App\Discount', 'product_id', 'product_id');
-    //     ->SelectRaw(
-    //         'UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(discounts.created_at)','<','expired_time'
-    //    )
+        return $this->hasOne('App\Discount', 'product_id', 'product_id')->whereRaw(
+            'UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(discounts.created_at)<expired_time'
+        );
     }
     
 }

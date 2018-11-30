@@ -5,13 +5,14 @@
             <div class="row">
                 <div class="col">
                     <div class="header_content d-flex flex-row align-items-center justify-content-start">
-                        <div class="logo"><a href="{{url('')}}">Sublime.</a></div>
+                    <div class="logo"><a href="{{url('')}}">Sublime.</a></div>
                         <nav class="main_nav">
                             <ul>
+                                
                                 <li class="hassubs active">
                                     <a href="{{url('')}}">Home</a>
                                     <ul>
-                                        <li><a href="category">Categories</a></li>
+                                    <li><a href="{{url('category')}}">Categories</a></li>
                                         <li><a href="product.html">Product</a></li>
                                         <li><a href="cart.html">Cart</a></li>
                                         <li><a href="checkout.html">Check out</a></li>
@@ -19,13 +20,12 @@
                                     </ul>
                                 </li>
                                 <li class="hassubs">
-                                    <a href="category">Categories</a>
-                                    <ul>
-                                        <li><a href="category">Category</a></li>
-                                        <li><a href="category">Category</a></li>
-                                        <li><a href="category">Category</a></li>
-                                        <li><a href="category">Category</a></li>
-                                        <li><a href="category">Category</a></li>
+                                    <a href="{{url('category')}}">Categories</a>
+                                    <ul style="white-space: nowrap;">
+                                        
+                                        @foreach (Website::getCategories() as $category)
+                                    <li><a href="{{url("category/$category->cat_slug")}}">{{ucfirst(strtolower($category->cat_name))}}</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
                                 <li><a href="#">Accessories</a></li>
@@ -126,12 +126,14 @@
 						</ul>
 					</li>
 					<li class="page_menu_item has-children menu_mm">
-						<a href="category">Categories<i class="fa fa-angle-down"></i></a>
+						<a href="{{url('category')}}">Categories<i class="fa fa-angle-down"></i></a>
 						<ul class="page_menu_selection menu_mm">
-							<li class="page_menu_item menu_mm"><a href="category">Category<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="category">Category<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="category">Category<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="category">Category<i class="fa fa-angle-down"></i></a></li>
+                               
+                                        
+                                        @foreach (Website::getCategories() as $category)
+                                    <li class="page_menu_item menu_mm"><a href="{{url("category/$category->cat_slug")}}">{{ucfirst(strtolower($category->cat_name))}}</a></li>
+                                        @endforeach
+                                
 						</ul>
 					</li>
 					<li class="page_menu_item menu_mm"><a href="{{url('')}}">Accessories<i class="fa fa-angle-down"></i></a></li>

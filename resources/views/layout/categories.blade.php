@@ -25,14 +25,14 @@
 
 	<div class="home">
 		<div class="home_container">
-			<div class="home_background" style="background-image:url({{asset('images/categories.jpg')}})"></div>
+			<div class="home_background" style="background-image:url({{$cat_data->cat_cover}})"></div>
 			<div class="home_content_container">
 				<div class="container">
 					<div class="row">
 						<div class="col">
 							<div class="home_content">
 								<div class="home_title">{{$cat_data->cat_name}}<span>.</span></div>
-								<div class="home_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie eros. Sed viverra velit venenatis fermentum luctus.</p></div>
+								<div class="home_text"><p>{{$cat_data->cat_description}}</p></div>
 							</div>
 						</div>
 					</div>
@@ -44,13 +44,14 @@
 	<!-- Products -->
 
 	<div class="products">
+			
 		<div class="container">
 			<div class="row">
 				<div class="col">
 					
 					<!-- Product Sorting -->
 					<div class="sorting_bar d-flex flex-md-row flex-column align-items-md-center justify-content-md-start">
-						<div class="results">Showing <span>12</span> results</div>
+						<div class="results">Showing <span>{{count($products_list)}}</span> results</div>
 						<div class="sorting_container ml-md-auto">
 							<div class="sorting">
 								<ul class="item_sorting">
@@ -69,40 +70,94 @@
 					</div>
 				</div>
 			</div>
+			
 			<div class="row">
+					@if (count($products_list)==0)
+					<style>
+						.no-result{
+						width: 100%
+
+						}
+					</style>
+					<div class="no-result" >
+						<button style="border:none; 
+						
+						color:red;
+						display:block;
+						margin: 15px auto;
+						font-size:25px;	
+						background:white"><span>Sorry! In current, this category doesn't have any products</span></button>
+						<button style="display:block;margin:10px auto;
+						border:none;
+						border-radius: 5px;
+						"><a href="{{url()->previous()}}" style="text-decoration: none;font-size: 30px;
+						padding:5px 5px;"></span>Go back</a></button>
+					</div>
+				@endif
 				<div class="col">
 					
 					<div class="product_grid">
+							
                         <style>
                         .product_image:hover{
-                            transform: scale(1.3);
+                            transform: scale(1.5);
                           
                         }
-                        .img-box:hover {
+                        /* .img-box:hover {
                            border:2px solid black;
                           
-                        }
+                        } */
                         .product_image{
+							max-width: 263px;
                             transition-duration: 0.5s;
+							margin: 0 auto;
+							display: inline-block;
                         }
+						
                         .img-box{
-                            border-radius: 5px;
+							width: 100%;
+							margin-top:10px;
+							
+                           max-height: 241.5px;
                             overflow: hidden;
+							padding-bottom: 5px;
+							/* border-bottom: 1px solid black; */
+							text-align: center
                         }
+						.product{
+							border-radius:5px;
+							transition-duration: 0.5s;
+							box-shadow: 0 1px 3px -2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+						}
+						.product:hover{
+							border-radius: 5px;
+							-webkit-box-shadow: -1.5px 1.5px 20px 1.5px rgba(0,0,0,0.75);
+							-moz-box-shadow: -1.5px 1.5px 20px 1.5px rgba(0,0,0,0.75);
+							box-shadow: -1.5px 1.5px 20px 1.5px rgba(0,0,0,0.75);
+						}
+						.product_content{
+							padding: 5px 10px;
+							text-align: center;
+						}
+						.product_content{
+							background: rgba(241, 242, 244, 1)
+						}
+
                         </style>
 						@foreach ($products_list as $product)
                             <!-- Product -->
                             
-						<div class="product">
+						<div class="product" style="border">
                             <div class="img-box" style="display:inline-block">
                                     <div class="product_image">
-                                        <img src="{{$product->images->first()->src_img ?? asset('images/no-image.png') }}" alt="">
+									<a href="{{url('/product/'.$product->slug.'-'.$product->product_id.'.html')}}"><img src="{{$product->images->first()->src_img ?? asset('images/no-image.png') }}" alt=""></a>
                                     </div>
                             </div>
 							
-							<div class="product_extra product_new"><a href="categories.html">New</a></div>
+							<div class="product_extra product_new"><a href="{{url('category/new')}}">New</a></div>
 							<div class="product_content">
-                            <div class="product_title"><a href="product.html">{{$product->product_name}}</a></div>
+								<div class="product_name" style="display:none">{{$product->product_name}}</div>
+                            <div class="product_title"><a href="{{url('/product/'.$product->slug.'-'.$product->product_id.'.html')}}">{{$product->product_name}}</a></div>
                             <div class="product_price">${{$product->price}}</div>
 							</div>
 						</div>
@@ -158,59 +213,7 @@
 		</div>
 	</div>
 
-	<!-- Newsletter -->
-
-	<div class="newsletter">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="newsletter_border"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-8 offset-lg-2">
-					<div class="newsletter_content text-center">
-						<div class="newsletter_title">Subscribe to our newsletter</div>
-						<div class="newsletter_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie eros</p></div>
-						<div class="newsletter_form_container">
-							<form action="#" id="newsletter_form" class="newsletter_form">
-								<input type="email" class="newsletter_input" required="required">
-								<button class="newsletter_button trans_200"><span>Subscribe</span></button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Footer -->
-	
-	<div class="footer_overlay"></div>
-	<footer class="footer">
-		<div class="footer_background" style="background-image:url({{asset('images/footer.jpg')}})"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="footer_content d-flex flex-lg-row flex-column align-items-center justify-content-lg-start justify-content-center">
-						<div class="footer_logo"><a href="#">Sublime.</a></div>
-						<div class="copyright ml-auto mr-auto"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
-						<div class="footer_social ml-lg-auto">
-							<ul>
-								<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-</div>
+@include('layout.footer')
 
 <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
 <script src="{{asset('styles/bootstrap4/popper.js')}}"></script>
