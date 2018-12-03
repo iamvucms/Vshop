@@ -1,4 +1,6 @@
 	<!-- Newsletter -->
+@section('mail_register')
+    
 
 	<div class="newsletter">
             <div class="container">
@@ -23,7 +25,11 @@
                 </div>
             </div>
         </div>
-    
+        @endsection
+        @if (strpos(url()->current(),route('shopping_cart'))<0 || strpos(url()->current(),route('shopping_cart'))!=false)
+            @yield('mail_register')
+        @endif
+       
         <!-- Footer -->
         
         <div class="footer_overlay"></div>

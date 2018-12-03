@@ -293,9 +293,10 @@
 			</div>
 		</div>
 	</div>
-
+	@extends('layout.footer')
+	@yield('mail_register')
 	@include('layout.footer')
-
+	
 <script src="{{asset('/js/jquery-3.2.1.min.js')}}"></script>
 <script src="{{asset('/styles/bootstrap4/popper.js')}}"></script>
 <script src="{{asset('/styles/bootstrap4/bootstrap.min.js')}}"></script>

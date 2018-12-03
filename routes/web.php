@@ -25,7 +25,22 @@ Route::get('product/{slug}-{id}.html','ProductController@productDetails')->where
     'slug'=>'[a-zA-Z-0-9--]+',
     'id'=>'[0-9]+'
     ]);
-    Route::get('category/{slug?}', ['uses'=>'CategoriesController@products'])->where(['slug'=>'[a-zA-Z--]+']);
+    Route::get('category/{slug?}', ['uses'=>'CategoriesController@products'])->where(['slug'=>'[a-zA-Z--]+'])->name('category');
     // Route::get('x', function () {
     //     dd(App\Product::where('product_id',1)->first()->discount);
     // });
+
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::group(['prefix' => 'members'], function () {
+    Route::get('login',['uses'=>'User\LoginController@getLogin'])->middleware('guest')->name('login');
+    Route::post('login',['uses'=>'User\LoginController@postLogin'])->middleware('guest')->name('postLogin');
+    Route::get('logout',['uses'=>'User\LogoutController@Logout'])->name('logout');
+});
+Route::get('shopping_cart',function(){
+    return view('layout.cart');
+})->name('shopping_cart');
+Route::get('cart',function(){
+    $cart = new App\Cart;
+    //$cart->addItem(1,10);
+    dd(Session::get('cart'));
+});

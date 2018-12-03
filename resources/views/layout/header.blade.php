@@ -14,7 +14,7 @@
                                     <ul>
                                     <li><a href="{{url('category')}}">Categories</a></li>
                                         <li><a href="product.html">Product</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
+                                        <li><a href="{{route('shopping_cart')}}">Cart</a></li>
                                         <li><a href="checkout.html">Check out</a></li>
                                         <li><a href="contact.html">Contact</a></li>
                                     </ul>
@@ -28,14 +28,14 @@
                                         @endforeach
                                     </ul>
                                 </li>
-                                <li><a href="#">Accessories</a></li>
+                                <li><a href="{{url('category/accessories')}}">Accessories</a></li>
                                 <li><a href="#">Offers</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </nav>
                         <div class="header_extra ml-auto">
                             <div class="shopping_cart">
-                                <a href="cart.html">
+                                <a href="{{route('shopping_cart')}}">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                              viewBox="0 0 489 489" style="enable-background:new 0 0 489 489;" xml:space="preserve">
                                         <g>
@@ -120,7 +120,7 @@
 						<ul class="page_menu_selection menu_mm">
 							<li class="page_menu_item menu_mm"><a href="category">Categories<i class="fa fa-angle-down"></i></a></li>
 							<li class="page_menu_item menu_mm"><a href="product.html">Product<i class="fa fa-angle-down"></i></a></li>
-							<li class="page_menu_item menu_mm"><a href="cart.html">Cart<i class="fa fa-angle-down"></i></a></li>
+							<li class="page_menu_item menu_mm"><a href="{{route('shopping_cart')}}">Cart<i class="fa fa-angle-down"></i></a></li>
 							<li class="page_menu_item menu_mm"><a href="checkout.html">Checkout<i class="fa fa-angle-down"></i></a></li>
 							<li class="page_menu_item menu_mm"><a href="contact.html">Contact<i class="fa fa-angle-down"></i></a></li>
 						</ul>
@@ -136,7 +136,7 @@
                                 
 						</ul>
 					</li>
-					<li class="page_menu_item menu_mm"><a href="{{url('')}}">Accessories<i class="fa fa-angle-down"></i></a></li>
+					<li class="page_menu_item menu_mm"><a href="{{url('category/accessories')}}">Accessories<i class="fa fa-angle-down"></i></a></li>
 					<li class="page_menu_item menu_mm"><a href="#">Offers<i class="fa fa-angle-down"></i></a></li>
 					<li class="page_menu_item menu_mm"><a href="contact.html">Contact<i class="fa fa-angle-down"></i></a></li>
 				</ul>
