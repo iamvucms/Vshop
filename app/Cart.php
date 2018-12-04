@@ -1,33 +1,43 @@
 <?php
 
 namespace App;
-use Session;
-use Illuminate\Database\Eloquent\Model;
+
 use App\Product;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Model;
+
 class Cart extends Model
 {
     private $cart;
     function __construct(){
-      //dd(Session::get('cart'));
-        $this->cart = Session::has('cart')  ? Session::get('cart') : [];
-        echo   Session::has('cart') ;
+      //dd(session('cart'));
+       $this->cart =session()->get('cart') ? session()->get('cart') : [];
+        //echo   Session::has('cart') ;
       //dd(Session::get('cart'));
     }
-    public function addItem($product_id,$quantity){
+    public function addItem($product_id,$quantity,$ckey=null){
         $product =Product::where('product_id',$product_id);
         $exists = $this->is_exists($product_id);
-        if($product->count()>0 && $quantity >0 && $exists["has"]){
-           $this->cart[$exists["key"]]["quantity"] += $quantity;
+        if($product->count() > 0 && $quantity > 0){
+            if($exists["has"]){
+                if($this->checkCkey($ckey)){
+                    $this->cart[$exists["key"]]["quantity"] += $quantity;
+                }else{
+                    echo 1111;
+                }
+                
+            }elseif(!$exists["has"]){
+                 $key = str_shuffle('abcdefghijklmnopqrstuvwxyz'.strtoupper('abcdefghijklmnopqrstuvwxyz').'0123456789');
+                session()->put(['cart_key'=>$key]);
+                $this->cart[]=[
+                    'cart_key' => Hash::make($key),
+                    'product_id'=> $product_id,
+                    'quantity'=>$quantity,
+                    'price' => $product->first()->price
+                ];
+            }       
         }
-        elseif($product->count()>0 && $quantity >0 && !$exists["has"]){
-            $this->cart[]=[
-                'product_id'=> $product_id,
-                'quantity'=>$quantity,
-                'price' => $product->first()->price
-            ];
-        }
-        Session::put('cart',$this->cart);
-        $this->__construct();
+        $this->saveCart();
    //    dd(Session::get('cart'));
     }
     public function editItem($product_id,$quantity){
@@ -42,8 +52,7 @@ class Cart extends Model
                     break;
                 }
             }
-            Session::put('cart',$this->cart);
-            $this->__construct();
+            $this->saveCart();
     }
     public function delItem($product_id){
          foreach ($this->cart as $key => $item) {
@@ -52,8 +61,7 @@ class Cart extends Model
                  break;
              }
          }
-         Session::put('cart',$this->cart);
-         $this->__construct();
+         $this->saveCart();
     }
     public function is_exists($product_id){
         foreach($this->cart as $key => $item){
@@ -63,5 +71,12 @@ class Cart extends Model
     }
     public function getCart(){
             return $this->cart;
+    }
+    private function saveCart(){
+        session()->put(['cart'=>$this->cart]);
+        $this->__construct();
+    }
+    private function checkCkey($hash){
+        return Hash::check(session()->get('cart_key'), $hash);
     }
 }

@@ -41,6 +41,10 @@ Route::get('shopping_cart',function(){
 })->name('shopping_cart');
 Route::get('cart',function(){
     $cart = new App\Cart;
-    //$cart->addItem(1,10);
-    dd(Session::get('cart'));
+   $cart->addItem(2,10,'$2y$10$jx1KB24jtHsOWdO91yF/he3TH/tBoYI85/nMWyS7GS.mUJM6PXr2S');
+   
+  
+});
+Route::get('gcart',function(){
+    dd(session()->get('cart'));
 });
